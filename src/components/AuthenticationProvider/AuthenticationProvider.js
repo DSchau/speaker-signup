@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import qs from 'query-string';
+import qs from 'querystring';
 import fetch from 'isomorphic-fetch';
 
 import { getItem, setItem } from '../../util/local-storage';
