@@ -10,6 +10,11 @@ const Container = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  minHeight: 60,
+  padding: '0.25rem 0',
+  border: '1px solid #EEE',
+  borderLeftWidth: 0,
+  borderRightWidth: 0,
   marginTop: 'auto',
   marginBottom: '1rem',
 });

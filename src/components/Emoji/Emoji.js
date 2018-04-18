@@ -10,13 +10,18 @@ const Container = styled.button(
     border: 'none',
     outline: 'none',
   },
-  ({ interactive }) => ({
+  ({ interactive, small }) => ({
     ...(interactive
       ? {
           cursor: 'pointer',
           ':hover': {
             transform: 'scale(1.2)',
           },
+        }
+      : {}),
+    ...(small
+      ? {
+          fontSize: 20,
         }
       : {}),
   })
