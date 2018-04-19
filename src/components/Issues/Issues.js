@@ -23,8 +23,10 @@ const Link = styled(GatsbyLink)`
   padding: 0.5rem 0;
 `;
 
-export function Issues({ list, title = 'Open proposals' }) {
-  const last = list.pop().node.id;
+/*
+ * TODO: get endCursor
+ */
+export function Issues({ list = [], title = 'Open proposals' }) {
   return (
     <Block
       title={title}
@@ -60,7 +62,7 @@ export function Issues({ list, title = 'Open proposals' }) {
             }
           }
         `.trim()}
-          variables={{ after: last }}
+          variables={{ after: 'TODO' }}
         >
           {({ data }) => {
             return (

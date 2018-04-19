@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { Header } from '../components';
+import { Header, UserProvider } from '../components';
 import '../style/global';
 import 'normalize.css';
 
@@ -30,7 +30,7 @@ export default function IndexLayout({ children, data }) {
           paddingTop: 0,
         }}
       >
-        {children()}
+        <UserProvider>{children()}</UserProvider>
       </div>
     </div>
   );

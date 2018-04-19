@@ -14,17 +14,24 @@ export class AuthenticatedQuery extends Component {
   makeRequest = async client => {
     const result = await client.query({
       query: gql(this.props.query),
-      variables: this.props.variables,
+      variables: this.props.variables || {},
     });
 
-    this.setState({
-      ...result,
-      requested: true,
-    });
+    this.setState(
+      {
+        ...result,
+        requested: true,
+      },
+      () => {
+        if (this.props.onQuery) {
+          this.props.onQuery(result);
+        }
+      }
+    );
   };
 
   render() {
-    const { children, query, variables } = this.props;
+    const { children, query } = this.props;
     const { requested, ...stateData } = this.state;
     return (
       <Authentication>
@@ -34,7 +41,9 @@ export class AuthenticatedQuery extends Component {
               if (token && !requested) {
                 this.makeRequest(client);
               }
-              return children(stateData);
+              return typeof children === 'function'
+                ? children(stateData)
+                : null;
             }}
           </ApolloConsumer>
         )}

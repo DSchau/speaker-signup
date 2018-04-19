@@ -38,7 +38,10 @@ export function Issue({ author, bodyHTML, fields, id, reactions, title, url }) {
         dangerouslySetInnerHTML={{ __html: bodyHTML }}
       />
       <Reaction subjectId={id}>
-        <ReactionsList list={reactions.edges.map(({ node }) => node.content)} />
+        <ReactionsList
+          list={reactions.edges.map(({ node }) => node)}
+          subjectId={id}
+        />
       </Reaction>
     </Container>
   );
@@ -63,6 +66,9 @@ export const issueFragment = graphql`
       edges {
         node {
           content
+          user {
+            login
+          }
         }
       }
     }

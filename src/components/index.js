@@ -7,3 +7,4 @@ export * from './Issue';
 export * from './Issues';
 export * from './Reaction';
 export * from './ReactionMutation';
+export * from './UserProvider';

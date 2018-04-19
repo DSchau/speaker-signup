@@ -54,6 +54,9 @@ module.exports = {
                       edges {
                         node {
                           content
+                          user {
+                            login
+                          }
                         }
                       }
                     }
