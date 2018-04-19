@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'react-emotion';
 import GatsbyLink from 'gatsby-link';
 
-import { Block, Issue } from '..';
+import { AuthenticatedQuery, Block, Issue } from '..';
 
 const Grid = styled.div`
   display: grid;
@@ -24,53 +24,60 @@ const Link = styled(GatsbyLink)`
 `;
 
 export function Issues({ list, title = 'Open proposals' }) {
+  const last = list.pop().node.id;
   return (
     <Block
       title={title}
       children={() => (
-        <React.Fragment>
-          <Grid>
-            {list.map(({ node }) => <Issue key={node.id} {...node} />)}
-          </Grid>
-          {title.indexOf('Open') > -1 ? (
-            <Link to="/closed">Check out closed proposals</Link>
-          ) : (
-            <Link to="/">Check out open proposals</Link>
-          )}
-        </React.Fragment>
+        <AuthenticatedQuery
+          query={`
+          query getNewIssues($after: String!) {
+            repository(owner: "nebraskajs", name: "speaker-signup") {
+              issues(after: $after, last: 50) {
+                edges {
+                  node {
+                    id
+                    author {
+                      avatarUrl
+                      login
+                      url
+                    }
+                    bodyHTML
+                    state
+                    title
+                    url
+                    createdAt
+                    reactions(first:10) {
+                      edges {
+                        node {
+                          content
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `.trim()}
+          variables={{ after: last }}
+        >
+          {({ data }) => {
+            return (
+              <React.Fragment>
+                <Grid>
+                  {list.map(({ node }) => <Issue key={node.id} {...node} />)}
+                </Grid>
+                {title.indexOf('Open') > -1 ? (
+                  <Link to="/closed">Check out closed proposals</Link>
+                ) : (
+                  <Link to="/">Check out open proposals</Link>
+                )}
+              </React.Fragment>
+            );
+          }}
+        </AuthenticatedQuery>
       )}
     />
   );
 }
-
-// export function Issues() {
-//   return (
-//     <Query
-//       query={gql`
-//         query {
-//           repository(owner: "nebraskajs", name: "speaker-signup") {
-//             issues(last: 20, states: OPEN) {
-//               edges {
-//                 node {
-//                   ...IssueFragment
-//                 }
-//               }
-//             }
-//           }
-//         }
-//         ${Issue.fragments.issue}
-//       `}
-//       children={({ loading, error, data }) => {
-//         if (loading) {
-//           return <p>Loading...</p>;
-//         } else if (error) {
-//           return <p>An error!</p>;
-//         }
-
-//         return data.repository.issues.edges.map(({ node: issue }) => (
-//           <Issue key={issue.id} {...issue} />
-//         ));
-//       }}
-//     />
-//   );
-// }

@@ -1,3 +1,4 @@
+export * from './AuthenticatedQuery';
 export * from './AuthenticationProvider';
 export * from './Block';
 export * from './Emoji';

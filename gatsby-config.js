@@ -25,7 +25,7 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-yaml',
     {
-      resolve: '@dschau/gatsby-source-github',
+      resolve: 'gatsby-source-github',
       options: {
         headers: {
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -34,6 +34,9 @@ module.exports = {
           `{
             repository(owner: "nebraskajs", name: "speaker-signup") {
               issues(last: 50) {
+                pageInfo {
+                  endCursor
+                }
                 edges {
                   node {
                     id
