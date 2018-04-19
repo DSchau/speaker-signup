@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'react-emotion';
+import { Mutation } from 'react-apollo';
 import { Tooltip } from 'react-tippy';
+import gql from 'graphql-tag';
 import 'react-tippy/dist/tippy.css';
 
 import { Authentication } from '..';
@@ -38,40 +40,64 @@ const Reactions = ({ list, onReaction }) => (
   </ReactionContainer>
 );
 
-export function Reaction({ children, list }) {
+export function Reaction({ children, list, subjectId }) {
   return (
     <Authentication>
       {({ authenticate, authenticated, token }) => (
-        <Container>
-          {children}
-          <Tooltip
-            position="bottom"
-            trigger="click"
-            html={
-              <Reactions
-                list={list}
-                onReaction={reaction => {
-                  if (!authenticated) {
-                    const shouldAuthenticate = confirm(
-                      'Adding a reaction requires logging in. Log in?'
-                    );
-                    if (shouldAuthenticate) {
-                      authenticate();
-                    }
-                  }
-                }}
-              />
+        <Mutation
+          mutation={gql`
+            mutation AddReactionToIssue(
+              $subjectId: ID!
+              $content: ReactionContent!
+            ) {
+              addReaction(input: { subjectId: $subjectId, content: $content }) {
+                reaction {
+                  content
+                }
+                subject {
+                  id
+                }
+              }
             }
-            animation="scale"
-            duration={150}
-            theme="light"
-            interactive
-            arrow
-            arrowSize="big"
-          >
-            <Trigger />
-          </Tooltip>
-        </Container>
+          `}
+        >
+          {addReaction => (
+            <Container>
+              {children}
+              <Tooltip
+                position="bottom"
+                trigger="click"
+                html={
+                  <Reactions
+                    list={list}
+                    onReaction={reaction => {
+                      if (authenticated) {
+                        addReaction({
+                          variables: { subjectId, content: reaction },
+                        });
+                      } else {
+                        const shouldAuthenticate = confirm(
+                          'Adding a reaction requires logging in. Log in?'
+                        );
+                        if (shouldAuthenticate) {
+                          authenticate();
+                        }
+                      }
+                    }}
+                  />
+                }
+                animation="scale"
+                duration={150}
+                theme="light"
+                interactive
+                arrow
+                arrowSize="big"
+              >
+                <Trigger />
+              </Tooltip>
+            </Container>
+          )}
+        </Mutation>
       )}
     </Authentication>
   );
