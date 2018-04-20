@@ -30,8 +30,9 @@ module.exports = {
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         },
         queries: [
-          `{
-            repository(owner: "nebraskajs", name: "speaker-signup") {
+          [
+            `query getIssues($owner: String!, $name: String!) {
+            repository(owner: $owner, name: $name) {
               issues(last: 50, orderBy:{ field:CREATED_AT, direction:DESC }) {
                 pageInfo {
                   endCursor
@@ -65,6 +66,8 @@ module.exports = {
               }
             }
           }`,
+            { owner: process.env.OWNER_NAME, name: process.env.REPO_NAME },
+          ],
         ],
       },
     },

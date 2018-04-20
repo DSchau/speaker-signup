@@ -39,7 +39,7 @@ const merge = (updated, list) => {
       node: {
         ...node,
         fields: {
-          slug: `/proposal/${encodeURIComponent(node.id)}`,
+          slug: `/proposal/${decodeURIComponent(node.id)}`,
         },
       },
     };
@@ -93,6 +93,6 @@ export function Issues({
 }
 
 Issues.defaultProps = {
-  owner: 'nebraskajs',
-  name: 'speaker-signup',
+  owner: process.env.OWNER_NAME,
+  name: process.env.REPO_NAME,
 };
