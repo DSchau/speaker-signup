@@ -3,7 +3,6 @@ import styled from 'react-emotion';
 import { Query } from 'react-apollo';
 import GatsbyLink from 'gatsby-link';
 import gql from 'graphql-tag';
-import slugify from 'limax';
 
 import { Block, Issue } from '..';
 import { idx } from '../../util';
@@ -40,7 +39,7 @@ const merge = (updated, list) => {
       node: {
         ...node,
         fields: {
-          slug: `/proposal/${slugify(node.id)}`,
+          slug: `/proposal/${encodeURIComponent(node.id)}`,
         },
       },
     };

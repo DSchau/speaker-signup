@@ -8,7 +8,7 @@ const UserContext = React.createContext('user');
 
 export function UserProvider({ children }) {
   return (
-    <Query query={gql(VIEWER_QUERY)} onComplete={this.updateUser}>
+    <Query query={gql(VIEWER_QUERY)}>
       {({ data = {} }) => {
         const { viewer = {} } = data;
         return (
