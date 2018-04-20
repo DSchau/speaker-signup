@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'react-emotion';
+import { Query } from 'react-apollo';
 import GatsbyLink from 'gatsby-link';
+import gql from 'graphql-tag';
 
 import { AuthenticatedQuery, Block, Issue } from '..';
+import { idx } from '../../util';
+import { ISSUES_QUERY } from '../../graphql';
 
 const Grid = styled.div`
   display: grid;
@@ -23,52 +27,48 @@ const Link = styled(GatsbyLink)`
   padding: 0.5rem 0;
 `;
 
-/*
- * TODO: get endCursor
- */
-export function Issues({ list = [], title = 'Open proposals' }) {
+const merge = (updated, list) => {
+  const lookup = list.reduce((lookupTable, { node }, index) => {
+    lookupTable[node.id] = index;
+    return lookupTable;
+  }, {});
+
+  return updated.reduce((merged, { node, ...rest }) => {
+    const clone = {
+      ...rest,
+      node: {
+        ...node,
+        fields: {
+          slug: `/proposal/${node.id}`,
+        },
+      },
+    };
+    const index = typeof lookup[node.id] === 'number' ? lookup[node.id] : -1;
+    if (index > -1) {
+      merged[index] = clone;
+    } else {
+      merged.push(clone);
+    }
+    return merged;
+  }, list.slice(0));
+};
+
+export function Issues({ list = [], owner, name, title = 'Open proposals' }) {
+  const { pageInfo = {} } = list[0].node || {};
   return (
-    <Block
-      title={title}
-      children={() => (
-        <AuthenticatedQuery
-          query={`
-          query getNewIssues($after: String!) {
-            repository(owner: "nebraskajs", name: "speaker-signup") {
-              issues(after: $after, last: 50) {
-                edges {
-                  node {
-                    id
-                    author {
-                      avatarUrl
-                      login
-                      url
-                    }
-                    bodyHTML
-                    state
-                    title
-                    url
-                    createdAt
-                    reactions(first:10) {
-                      edges {
-                        node {
-                          content
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `.trim()}
-          variables={{ after: 'TODO' }}
-        >
-          {({ data }) => {
+    <Query query={gql(ISSUES_QUERY)} variables={{ owner, name }}>
+      {({ data }) => (
+        <Block
+          title={title}
+          children={() => {
+            const merged = merge(
+              idx(data, _ => data.repository.issues.edges, []),
+              list
+            );
             return (
               <React.Fragment>
                 <Grid>
-                  {list.map(({ node }) => <Issue key={node.id} {...node} />)}
+                  {merged.map(({ node }) => <Issue key={node.id} {...node} />)}
                 </Grid>
                 {title.indexOf('Open') > -1 ? (
                   <Link to="/closed">Check out closed proposals</Link>
@@ -78,8 +78,13 @@ export function Issues({ list = [], title = 'Open proposals' }) {
               </React.Fragment>
             );
           }}
-        </AuthenticatedQuery>
+        />
       )}
-    />
+    </Query>
   );
 }
+
+Issues.defaultProps = {
+  owner: 'nebraskajs',
+  name: 'speaker-signup',
+};

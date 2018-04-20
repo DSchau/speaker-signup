@@ -50,7 +50,7 @@ export function ReactionsList({ list, subjectId }) {
       {({ login = '' }) => (
         <Container>
           {Object.keys(uniq).map(reaction => {
-            const { count, users } = uniq[reaction];
+            const { count, users = [] } = uniq[reaction] || {};
             const userReacted = users.some(
               ({ login: reactionLogin }) => reactionLogin === login
             );

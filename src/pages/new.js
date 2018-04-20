@@ -106,18 +106,24 @@ export default class NewProposal extends Component {
       ev.preventDefault();
       if (authenticated) {
         const { body, title } = this.state;
-        return fetch(`https://api.github.com/repos/dschau/website/issues`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            body,
-            labels: ['speaker-signup webapp'],
-            title,
-          }),
-        })
+        this.setState({
+          status: 'loading',
+        });
+        const result = fetch(
+          `https://api.github.com/repos/dschau/website/issues`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/vnd.github.v3+json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              body,
+              labels: ['speaker-signup webapp'],
+              title,
+            }),
+          }
+        )
           .then(response => {
             return response.json().then(json => {
               if (!response.ok) {
@@ -126,20 +132,24 @@ export default class NewProposal extends Component {
               return json;
             });
           })
-          .then(json => {
+          .then(() => {
             this.setState(
               {
                 body: '',
                 status: 'submitted',
                 title: '',
               },
-              this.handleTimeout
+              this.handleTimeout()
             );
           })
           .catch(err => {
-            this.setState({
-              error: err,
-            });
+            this.setState(
+              {
+                status: 'error',
+                error: err,
+              },
+              this.handleTimeout(5000)
+            );
           });
       }
       const shouldAuthenticate = confirm(
@@ -152,11 +162,24 @@ export default class NewProposal extends Component {
   };
 
   handleTimeout = () => {
-    setTimeout(() => {
-      this.setState({
-        status: '',
-      });
-    }, 2500);
+    return (duration = 2500) => {
+      setTimeout(() => {
+        this.setState({
+          status: '',
+        });
+      }, duration);
+    };
+  };
+
+  getButtonMessage = status => {
+    switch (status) {
+      case 'submitted':
+        return 'Got it. Thanks!';
+      case 'error':
+        return 'Uh-oh. Looks like something went wrong!';
+      default:
+        return 'Send it';
+    }
   };
 
   render() {
@@ -209,9 +232,7 @@ export default class NewProposal extends Component {
                       Note: markdown is supported
                     </small>
                   </Label>
-                  <Button>
-                    {status === 'submitted' ? 'Got it. Thanks!' : 'Send it'}
-                  </Button>
+                  <Button>{this.getButtonMessage(status)}</Button>
                 </Form>
               )}
             />

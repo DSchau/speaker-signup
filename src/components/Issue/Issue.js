@@ -72,5 +72,8 @@ export const issueFragment = graphql`
         }
       }
     }
+    pageInfo {
+      endCursor
+    }
   }
 `;
