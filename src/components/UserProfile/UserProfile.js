@@ -12,6 +12,7 @@ const Container = styled.div({
 const ImageContainer = styled.div({
   display: 'flex',
   alignItems: 'center',
+  cursor: 'pointer',
   '::after': {
     display: 'inline-block',
     width: 0,
@@ -35,13 +36,13 @@ export function UserProfile({ avatarUrl, login, name }) {
   }
 
   return (
-    <Logout>
-      <Container>
+    <Container>
+      <Logout>
         <ImageContainer>
           <Image src={avatarUrl} />
         </ImageContainer>
-        {name}
-      </Container>
-    </Logout>
+      </Logout>
+      {name}
+    </Container>
   );
 }
