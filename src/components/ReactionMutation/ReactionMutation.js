@@ -26,6 +26,7 @@ export function ReactionMutation({
   children,
   message,
   subjectId,
+  state = 'OPEN',
   type = 'add',
 }) {
   return (
@@ -41,7 +42,7 @@ export function ReactionMutation({
                 const addMutation = reaction => {
                   if (authenticated) {
                     return mutation({
-                      variables: { subjectId, content: reaction },
+                      variables: { subjectId, content: reaction, state },
                     });
                   }
                   const shouldAuthenticate = confirm(message);

@@ -1,39 +1,22 @@
 import React, { Component } from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
-import { AuthenticatedQuery } from '..';
+import { VIEWER_QUERY } from '../../graphql';
 
 const UserContext = React.createContext('user');
 
-export class UserProvider extends Component {
-  state = {
-    user: {},
-  };
-
-  updateUser = ({ data, error }) => {
-    if (!error) {
-      this.setState({
-        user: data.viewer,
-      });
-    }
-  };
-
-  render() {
-    return (
-      <UserContext.Provider value={this.state.user}>
-        <AuthenticatedQuery
-          query={`{
-            viewer {
-              avatarUrl
-              login
-              name
-            }
-          }`}
-          onQuery={this.updateUser}
-        />
-        {this.props.children}
-      </UserContext.Provider>
-    );
-  }
+export function UserProvider({ children }) {
+  return (
+    <Query query={gql(VIEWER_QUERY)} onComplete={this.updateUser}>
+      {({ data = {} }) => {
+        const { viewer = {} } = data;
+        return (
+          <UserContext.Provider value={viewer}>{children}</UserContext.Provider>
+        );
+      }}
+    </Query>
+  );
 }
 
 export const User = UserContext.Consumer;

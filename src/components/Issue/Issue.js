@@ -20,7 +20,16 @@ const Title = styled.h3`
   text-transform: uppercase;
 `;
 
-export function Issue({ author, bodyHTML, fields, id, reactions, title, url }) {
+export function Issue({
+  author,
+  bodyHTML,
+  fields,
+  id,
+  reactions,
+  state,
+  title,
+  url,
+}) {
   return (
     <Container>
       <Link
@@ -37,7 +46,7 @@ export function Issue({ author, bodyHTML, fields, id, reactions, title, url }) {
         css={{ fontFamily: 'Lato, sans-serif' }}
         dangerouslySetInnerHTML={{ __html: bodyHTML }}
       />
-      <Reaction subjectId={id}>
+      <Reaction subjectId={id} state={state}>
         <ReactionsList
           list={reactions.edges.map(({ node }) => node)}
           subjectId={id}

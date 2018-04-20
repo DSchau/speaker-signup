@@ -33,7 +33,7 @@ module.exports = {
         queries: [
           `{
             repository(owner: "nebraskajs", name: "speaker-signup") {
-              issues(last: 50) {
+              issues(last: 50, orderBy:{ field:CREATED_AT, direction:DESC }) {
                 pageInfo {
                   endCursor
                 }

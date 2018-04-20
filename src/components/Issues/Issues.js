@@ -3,8 +3,9 @@ import styled from 'react-emotion';
 import { Query } from 'react-apollo';
 import GatsbyLink from 'gatsby-link';
 import gql from 'graphql-tag';
+import slugify from 'limax';
 
-import { AuthenticatedQuery, Block, Issue } from '..';
+import { Block, Issue } from '..';
 import { idx } from '../../util';
 import { ISSUES_QUERY } from '../../graphql';
 
@@ -39,7 +40,7 @@ const merge = (updated, list) => {
       node: {
         ...node,
         fields: {
-          slug: `/proposal/${node.id}`,
+          slug: `/proposal/${slugify(node.id)}`,
         },
       },
     };
@@ -53,10 +54,16 @@ const merge = (updated, list) => {
   }, list.slice(0));
 };
 
-export function Issues({ list = [], owner, name, title = 'Open proposals' }) {
+export function Issues({
+  list = [],
+  owner,
+  name,
+  title = 'Open proposals',
+  state = 'OPEN',
+}) {
   const { pageInfo = {} } = list[0].node || {};
   return (
-    <Query query={gql(ISSUES_QUERY)} variables={{ owner, name }}>
+    <Query query={gql(ISSUES_QUERY)} variables={{ owner, name, state }}>
       {({ data }) => (
         <Block
           title={title}
@@ -68,7 +75,9 @@ export function Issues({ list = [], owner, name, title = 'Open proposals' }) {
             return (
               <React.Fragment>
                 <Grid>
-                  {merged.map(({ node }) => <Issue key={node.id} {...node} />)}
+                  {merged.map(({ node }) => (
+                    <Issue key={node.id} state={state} {...node} />
+                  ))}
                 </Grid>
                 {title.indexOf('Open') > -1 ? (
                   <Link to="/closed">Check out closed proposals</Link>

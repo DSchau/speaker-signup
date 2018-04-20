@@ -59,6 +59,7 @@ export function ReactionsList({ list, subjectId }) {
               <ReactionMutation
                 key={reaction}
                 subjectId={subjectId}
+                message="Adding a reaction requires logging in. Log in?"
                 type={type}
               >
                 {mutation => (

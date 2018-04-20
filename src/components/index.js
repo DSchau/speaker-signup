@@ -1,4 +1,3 @@
-export * from './AuthenticatedQuery';
 export * from './AuthenticationProvider';
 export * from './Block';
 export * from './Emoji';
@@ -7,4 +6,5 @@ export * from './Issue';
 export * from './Issues';
 export * from './Reaction';
 export * from './ReactionMutation';
+export * from './UserProfile';
 export * from './UserProvider';
