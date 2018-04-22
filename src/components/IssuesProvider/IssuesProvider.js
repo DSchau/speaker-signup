@@ -54,8 +54,8 @@ const merge = (data, list) => {
 
 export class IssuesProvider extends Component {
   static defaultProps = {
-    name: 'website',
-    owner: 'dschau',
+    name: 'nebraskajs',
+    owner: 'speaker-signup',
     state: 'OPEN',
   };
 
