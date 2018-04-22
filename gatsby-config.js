@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-console.log(`token is`, process.env.GITHUB_TOKEN);
+console.log({ owner: process.env.REPO_OWNER, name: process.env.REPO_NAME });
 
 module.exports = {
   siteMetadata: {
