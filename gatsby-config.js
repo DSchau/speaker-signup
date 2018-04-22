@@ -1,6 +1,10 @@
-require('dotenv').config();
-
-console.log({ owner: process.env.REPO_OWNER, name: process.env.REPO_NAME });
+const path = require('path');
+require('dotenv').config({
+  path: path.join(
+    process.cwd(),
+    process.env.NODE_ENV === 'production' ? `.env.production` : '.env'
+  ),
+});
 
 module.exports = {
   siteMetadata: {
