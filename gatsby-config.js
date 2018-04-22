@@ -16,6 +16,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-catch-links',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
