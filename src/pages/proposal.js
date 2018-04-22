@@ -19,7 +19,7 @@ export default class Proposal extends Component {
   render() {
     return (
       <IssuesConsumer>
-        {({ data, getIssue }) => {
+        {({ getIssue }) => {
           const issue = getIssue(this.state.id) || {};
           if (!issue.id) {
             return <h1>The specified proposal could not be found.</h1>;
