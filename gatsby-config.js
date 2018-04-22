@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+console.log(`token is`, process.env.GITHUB_TOKEN);
+
 module.exports = {
   siteMetadata: {
     title: 'Speaker Signup',
