@@ -28,8 +28,6 @@ const merge = (data, list) => {
 
   const issues = idx(data, _ => data.repository.issues.edges, []);
 
-  console.log(issues.filter(({ node }) => node.state === 'OPEN'));
-
   if (issues.length === 0) {
     return Object.assign({}, data, {
       repository: {
