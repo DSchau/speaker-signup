@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'react-emotion';
 import Link from 'gatsby-link';
 
-import { ReactionsList } from './ReactionsList';
+import { ReactionsList } from './reactions-list';
 import { Reaction } from '..';
 
 const Container = styled.div`

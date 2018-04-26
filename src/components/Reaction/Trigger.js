@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'react-emotion';
 
-import { Plus } from './Plus';
-import { Smiley } from './Smiley';
+import { Plus } from './plus';
+import { Smiley } from './smiley';
 
 const Container = styled.button({
   backgroundColor: 'transparent',

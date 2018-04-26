@@ -1,1 +1,1 @@
-export * from './Reaction';
+export * from './reaction';
