@@ -5,7 +5,7 @@ const Container = styled.section`
   background-color: white;
   border-radius: 6px;
   border: 6px solid black;
-  padding: 6px; /* 6 6 6 */
+  padding: 6px; /* 😈 */
   margin: 1rem 0;
   position: relative;
 
