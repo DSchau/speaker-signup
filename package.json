@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "dotenv": "~5.0.1",
+    "dotenv-expand": "~4.2.0",
     "gatsby-plugin-catch-links": "~1.0.19",
     "gatsby-source-github": "~0.0.2",
     "husky": "~0.14.3",

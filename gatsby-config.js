@@ -1,10 +1,10 @@
-const path = require('path');
-require('dotenv').config({
-  path: path.join(
-    process.cwd(),
-    process.env.NODE_ENV === 'production' ? `.env.production` : '.env'
-  ),
-});
+const dotenv = require('dotenv');
+const expand = require('dotenv-expand');
+
+const env = dotenv.config();
+expand(env);
+
+console.log(process.env.GITHUB_TOKEN);
 
 module.exports = {
   siteMetadata: {
