@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 
-import { Logout } from './Logout';
+import { Logout } from './logout';
 
 const Container = styled.div({
   display: 'flex',

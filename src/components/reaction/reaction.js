@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 
 import { ReactionMutation } from '..';
-import { Trigger } from './Trigger';
+import { Trigger } from './trigger';
 import { Emoji } from '..';
 
 const Container = styled.div({
