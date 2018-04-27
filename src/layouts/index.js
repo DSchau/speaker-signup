@@ -21,7 +21,9 @@ export default function IndexLayout({ children, data }) {
             { name: 'og:type', content: 'website' },
             { name: 'og:site_name', content: title },
           ]}
-        />
+        >
+          <html lang="en" />
+        </Helmet>
         <Header />
         <div
           style={{
