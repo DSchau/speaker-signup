@@ -18,7 +18,7 @@ const Grid = styled.div`
 
 const Link = styled(GatsbyLink)`
   display: block;
-  color: #aaa;
+  color: #666;
   font-size: 14px;
   text-align: center;
   padding: 0.5rem 0;

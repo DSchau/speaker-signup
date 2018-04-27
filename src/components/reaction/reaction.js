@@ -60,7 +60,7 @@ export function Reaction({ children, list, subjectId }) {
             arrow
             arrowSize="big"
           >
-            <Trigger data-test-id="reaction-trigger" />
+            <Trigger data-test-id="reaction-trigger" name={subjectId} />
           </Tooltip>
         </Container>
       )}

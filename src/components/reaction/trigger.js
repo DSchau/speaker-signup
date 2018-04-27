@@ -15,9 +15,9 @@ const Container = styled.button({
   },
 });
 
-export function Trigger(props) {
+export function Trigger({ name, ...rest }) {
   return (
-    <Container {...props}>
+    <Container name={`trigger-${name}`} {...rest}>
       <Plus />
       <Smiley />
     </Container>
