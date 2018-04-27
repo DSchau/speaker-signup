@@ -4,7 +4,7 @@ import styled from 'react-emotion';
 import { Plus } from './plus';
 import { Smiley } from './smiley';
 
-const Container = styled.button({
+const Button = styled.button({
   backgroundColor: 'transparent',
   border: 'none',
   outline: 'none',
@@ -15,11 +15,11 @@ const Container = styled.button({
   },
 });
 
-export function Trigger({ name, ...rest }) {
+export function Trigger(props) {
   return (
-    <Container name={`trigger-${name}`} {...rest}>
+    <Button aria-label="Reaction popup trigger" {...props}>
       <Plus />
       <Smiley />
-    </Container>
+    </Button>
   );
 }
