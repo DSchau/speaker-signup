@@ -38,8 +38,10 @@ const EMOJI_MAP = {
 export function Emoji({ ariaLabel, className, name, ...rest }) {
   const Container = rest.interactive ? EmojiButton : EmojiContainer;
   return (
-    <Container aria-label={ariaLabel} className={className} {...rest}>
-      {EMOJI_MAP[name]}
+    <Container className={className} {...rest} data-test-id="emoji-container">
+      <span role="img" aria-label={ariaLabel} data-test-id="emoji">
+        {EMOJI_MAP[name]}
+      </span>
     </Container>
   );
 }

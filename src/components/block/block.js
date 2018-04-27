@@ -44,7 +44,7 @@ export function Block({ children, title, ...rest }) {
   return (
     <Container {...rest}>
       <TitleContainer>
-        <Title>{title}</Title>
+        <Title data-test-id="title">{title}</Title>
       </TitleContainer>
       {children()}
     </Container>

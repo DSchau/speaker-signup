@@ -55,11 +55,12 @@ export function Reaction({ children, list, subjectId }) {
             animation="scale"
             duration={150}
             theme="light"
+            title="Add reaction"
             interactive
             arrow
             arrowSize="big"
           >
-            <Trigger />
+            <Trigger data-test-id="reaction-trigger" />
           </Tooltip>
         </Container>
       )}
