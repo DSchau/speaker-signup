@@ -5,9 +5,8 @@ let latoIndex = noriegaTheme.googleFonts.findIndex(
   font => font.name === 'Lato'
 );
 let lato = noriegaTheme.googleFonts[latoIndex];
-lato.styles.push('900');
 
 noriegaTheme.googleFonts[latoIndex] = lato;
-noriegaTheme.headerWeight = 900;
+noriegaTheme.headerWeight = 700;
 
 export default new Typography(noriegaTheme);
