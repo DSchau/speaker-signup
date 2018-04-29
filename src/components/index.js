@@ -1,6 +1,7 @@
 export * from './authentication-provider';
 export * from './block';
 export * from './emoji';
+export * from './github-link';
 export * from './header';
 export * from './issue';
 export * from './issues';

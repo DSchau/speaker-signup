@@ -124,18 +124,23 @@ export default class NewProposal extends Component {
         this.setState({
           status: 'loading',
         });
-        return fetch(`https://api.github.com/repos/dschau/website/issues`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            body,
-            labels: ['speaker-signup webapp'],
-            title,
-          }),
-        })
+        return fetch(
+          `https://api.github.com/repos/${process.env.REPO_OWNER}/${
+            process.env.REPO_NAME
+          }/issues`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/vnd.github.v3+json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              body,
+              labels: ['speaker-signup webapp'],
+              title,
+            }),
+          }
+        )
           .then(response => {
             return response.json().then(json => {
               if (!response.ok) {
