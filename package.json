@@ -41,13 +41,14 @@
   "license": "MIT",
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "build": "gatsby build",
+    "build": "cross-env NODE_ENV=production gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
     "start": "npm run develop",
     "test": "jest"
   },
   "devDependencies": {
+    "cross-env": "~5.1.4",
     "dotenv": "~5.0.1",
     "gatsby-plugin-catch-links": "~1.0.19",
     "gatsby-source-github": "~0.0.2",
