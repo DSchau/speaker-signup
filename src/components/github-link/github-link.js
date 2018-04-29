@@ -8,7 +8,7 @@ const Container = styled.div({
   right: 0,
   padding: 8,
   backgroundColor: 'white',
-  zIndex: 2
+  zIndex: 2,
 });
 
 const Link = styled.a({
@@ -17,19 +17,23 @@ const Link = styled.a({
   color: '#333',
   transition: '175ms ease-in-out',
   ':hover': {
-    color: '#4078c0'
-  }
+    color: '#4078c0',
+  },
 });
 
 const GithubIcon = styled(GoMarkGithub)({
   height: 24,
-  width: 24
+  width: 24,
 });
 
 export function GithubLink(props) {
   return (
     <Container {...props}>
-      <Link href="https://github.com/dschau/speaker-signup" target="_blank" rel="noopener">
+      <Link
+        href="https://github.com/dschau/speaker-signup"
+        target="_blank"
+        rel="noopener"
+      >
         <GithubIcon />
       </Link>
     </Container>

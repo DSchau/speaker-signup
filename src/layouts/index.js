@@ -1,7 +1,12 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { GithubLink, Header, IssuesProvider, UserProvider } from '../components';
+import {
+  GithubLink,
+  Header,
+  IssuesProvider,
+  UserProvider,
+} from '../components';
 import '../style/global';
 import 'normalize.css';
 
