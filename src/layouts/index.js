@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { Header, IssuesProvider, UserProvider } from '../components';
+import { GithubLink, Header, IssuesProvider, UserProvider } from '../components';
 import '../style/global';
 import 'normalize.css';
 
@@ -36,6 +36,7 @@ export default function IndexLayout({ children, data }) {
           {children()}
         </div>
       </IssuesProvider>
+      <GithubLink />
     </UserProvider>
   );
 }
